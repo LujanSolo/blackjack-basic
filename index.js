@@ -1,32 +1,39 @@
-let playerScore = 0;
-let dealerScore = 0;
-let scoreLimit = 21;
-
-let drawOne = Math.floor(Math.random() * (11 - 2 + 1) + 2);
-
-
 let gameStart = confirm("START GAME?");
 
-if(gameStart) {
-  console.log('game will start')
+let gameDetails = {
+  playerScore: 0,
+  dealerScore: 0,
+  scoreLimit: 21,
+}
+
+if (gameStart) {
+  blackjack();
 } else {
   alert("Maybe another time...");
-};
+}
+
+function drawOne() {
+  return Math.floor(Math.random() * (11 - 2 + 1) + 2);
+}
 
 function blackjack() {
-  playerScore = drawOne + drawOne;
-  dealerScore = drawOne;
+  // let player add one random card to his total every time he confirms "draw one"
+  gameDetails.playerScore += drawOne() + drawOne();
+  gameDetails.dealerScore += drawOne();
 
-  let drawAgain = confirm(`
-    Your Score: ${playerScore}
-    Dealer's Score: ${dealerScore}
-    Draw again?
+  
+
+  alert(`
+    You are given two cards. The dealer reveals one of his two.
+    Your Score: ${gameDetails.playerScore}
+    Dealer's Score: ${gameDetails.dealerScore}
     `
   );
 
-  if(drawAgain) {
-    playerScore += drawOne
-  }
+  if(gameDetails.playerScore === 21){
+    alert("BLACKJACK! YOU WIN!");
+    endGame();
+  };
 };
 
-blackjack()
+function endGame() {alert(`Your Score: ${gameDetails.playerScore} Dealer's Score: ${gameDetails.dealerScore} GAME OVER`); return;}
